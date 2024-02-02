@@ -32,6 +32,9 @@
         "--env-file",
         ".env" // .envファイルへのパスを指定します
     ],
+    "forwardPorts": [
+        8000
+    ],
     "postCreateCommand": "pip install --upgrade pip && pip install --user -r requirements.txt",
     "remoteUser": "vscode"
 }

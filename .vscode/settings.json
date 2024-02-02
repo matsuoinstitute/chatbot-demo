@@ -1,0 +1,19 @@
+{
+    "python.linting.pylintEnabled": false,
+    "python.linting.enabled": true,
+    "python.linting.flake8Enabled": true,
+    "editor.formatOnSave": true,
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+        // "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.defaultFormatter": "esbenp.prettier-vscode", // この行を追加する
+    },
+    "flake8.args": [
+        "--ignore=E203,E226,E402,W503,E501",
+        "--max-complexity=12"
+    ],
+    "python.formatting.provider": "none",
+    "python.analysis.typeCheckingMode": "basic",
+}
