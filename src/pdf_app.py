@@ -1,13 +1,12 @@
 import chainlit as cl
 from dotenv import load_dotenv
+from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import PyMuPDFLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.prompts import PromptTemplate
 from langchain.schema import HumanMessage
 from langchain.text_splitter import CharacterTextSplitter, SpacyTextSplitter
 from langchain.vectorstores import Chroma
-# from langchain.chat_models import ChatOpenAI
-from langchain_openai import ChatOpenAI
 
 load_dotenv("../.env")
 
@@ -61,7 +60,7 @@ async def on_chat_start():
 
     # 今回は、簡易化のためセッションに保存する。
     cl.user_session.set("data", database)
-    await cl.Message(content=f"アップロードが完了しました！").send()
+    await cl.Message(content="アップロードが完了しました！").send()
 
 
 @cl.on_message
