@@ -3,11 +3,10 @@ import os
 import chainlit as cl
 from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
-from langchain.document_loaders import PyMuPDFLoader
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.prompts import PromptTemplate
 from langchain.schema import HumanMessage
-from langchain.text_splitter import CharacterTextSplitter, SpacyTextSplitter
+from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Chroma
 
 from document_loader import excel_loader, pdf_loader, word_loader
