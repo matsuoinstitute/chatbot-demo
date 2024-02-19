@@ -2,12 +2,13 @@ import os
 
 import chainlit as cl
 from dotenv import load_dotenv
+from langchain.chains import ConversationalRetrievalChain, LLMChain
+from langchain.chains.question_answering import load_qa_chain
 from langchain.chat_models import ChatOpenAI
-from langchain.document_loaders import PyMuPDFLoader
 from langchain.embeddings import OpenAIEmbeddings
+from langchain.memory import ChatMessageHistory, ConversationBufferMemory
 from langchain.prompts import PromptTemplate
-from langchain.schema import HumanMessage
-from langchain.text_splitter import CharacterTextSplitter, SpacyTextSplitter
+from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Chroma
 
 from document_loader import excel_loader, pdf_loader, word_loader
@@ -72,7 +73,7 @@ async def on_chat_start():
         else:
             documents = excel_loader(file.path)
 
-        text_splitter = CharacterTextSplitter(chunk_size=400)
+        text_splitter = CharacterTextSplitter(chunk_size=500)
         splitted_documents = text_splitter.split_documents(documents)
 
         # テキストをベクトル化するOpenAIのモデル
@@ -87,44 +88,54 @@ async def on_chat_start():
         # 今回は、簡易化のためセッションに保存する。
         cl.user_session.set("data", database)
         await cl.Message(content="アップロードが完了しました！").send()
+    
+    llm = ChatOpenAI(model="gpt-4-0125-preview", temperature=0)
+    message_history = ChatMessageHistory()
+    memory = ConversationBufferMemory(
+        memory_key="chat_history",
+        output_key="answer",
+        chat_memory=message_history,
+        return_messages=True,
+    )
+
+    if database is not None:
+        retriever = database.as_retriever()
+        qa = ConversationalRetrievalChain.from_llm(
+            llm=llm,
+            chain_type="stuff",
+            retriever=retriever,
+            verbose=True,
+            memory=memory,
+            return_source_documents=True,
+        )
+        cl.user_session.set("qa", qa)
 
 
 @cl.on_message
 async def on_message(input_message: cl.Message):
     """メッセージが送られるたびに呼び出される."""
+    qa = cl.user_session.get("qa")
 
-    # 入力された文字と似たベクトルをPDFの中身から抽出
-    # プロンプトを作成して、OpenAIに送信
+    res = await qa.acall(
+        input_message.content,
+        callbacks=[cl.AsyncLangchainCallbackHandler()]
+    )
+    answer = res["answer"]
+    source_documents = res["source_documents"]
+    text_elements = []
 
-    # チャット用のOpenAIのモデル。今回は3.5を選定
-    open_ai = ChatOpenAI(model="gpt-4-0125-preview")
-
-    # セッションからベクトルストアを取得（この中にPDFの内容がベクトル化されたものが格納されている）
-    database = cl.user_session.get("data")
-
-    # 質問された文から似た文字列を、DBより抽出
-    documents = database.similarity_search(input_message.content)
-
-    # 抽出したものを結合
-    documents_string = ""
-    for document in documents:
-        documents_string += f"""
-        ---------------------------------------------
-        {document.page_content}
-        """
-
-    # プロンプトに埋め込みながらOpenAIに送信
-    result = open_ai(
-        [
-            HumanMessage(
-                content=prompt.format(
-                    document=documents_string,
-                    query=input_message.content,
-                    question=input_message.content,
-                )
+    if source_documents:
+        for source_idx, source_doc in enumerate(source_documents):
+            source_name = f"source_{source_idx}"
+            # Create the text element referenced in the message
+            text_elements.append(
+                cl.Text(content=source_doc.page_content, name=source_name)
             )
-        ]
-    ).content
+        source_names = [text_el.name for text_el in text_elements]
 
-    # 下記で結果を表示する(content=をOpenAIの結果にする。)
-    await cl.Message(content=result).send()
+        if source_names:
+            answer += f"\n参照元: {', '.join(source_names)}"
+        else:
+            answer += "\n参照先が見つかりませんでした。"
+
+    await cl.Message(content=answer, elements=text_elements).send()
