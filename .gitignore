@@ -6,7 +6,7 @@ __pycache__/
 *$py.class
 
 # sqlite3 database file
-src/sqlite-autoconf-3350000
+src/sqlite-3.35.0/
 
 # C extensions
 *.so
