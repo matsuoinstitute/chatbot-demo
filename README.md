@@ -5,4 +5,5 @@
 ・key を入力しましょう。
 
 ・https://github.com/Chainlit/chainlit のリポジトリをみてみて、chainlit のを使って対話方のチャットボットを作ってみましょう。
-・src直下に移動して、demo.py を実行してみましょう。
+
+・src 直下に移動して、demo.py を実行してみましょう。
