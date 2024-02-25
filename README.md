@@ -1,6 +1,6 @@
 受講生用のリポジトリなので、このリポジトリは基本 README.md 以外いじらない。
 
-・https://github.com/Chainlit/chainlit のリポジトリをみてみて、chainlit のを使って対話方のチャットボットを作ってみましょう。
+- https://github.com/Chainlit/chainlit のリポジトリをみてみて、chainlit のを使って対話方のチャットボットを作ってみましょう。
 
 - 具体な内容は [wiki](https://github.com/matsuoinstitute/chatbot-demo/wiki) に記載、ここでは、コードを書くために必要な基本的な手順を記載します。
 
@@ -72,6 +72,6 @@ env.sample をコピー＆ペーストして、作成できたファイルを「
 
 ---
 
-これで、コードを書ける環境が開けたはずです。LLM アプリの開発を始めましょう！
+これで、コードを書ける環境ができたはずです。LLM アプリの開発を始めましょう！
 
 まずは src 直下に移動して、demo.py を動かしてみましょう！
