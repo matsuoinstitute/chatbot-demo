@@ -44,4 +44,4 @@ DevContainer の利用により、開発環境のセットアップ時間が大�
 > - [VSCode Dev Containers でこれからの開発環境構築](https://cloudsmith.co.jp/blog/virtualhost/docker/2023/05/2381142.html)
 > - [VS Code+DevContainer+Docker で最強 Python 開発環境](https://zenn.dev/aidemy/articles/vscode-env-python)
 
-## 2.3. devcontainer の設定ファイルの記述
+# 3. 本課題でコードを書くまで
