@@ -33,11 +33,14 @@ Visual Studio Code（VSCode）は、Microsoft が開発した無料でオープ�
 > - [Visual Studio Code のダウンロードとインストール | javadrive](https://www.javadrive.jp/vscode/install/index1.html)
 > - [MacOS で Visual Studio Code をインストールする手順 | Qiita](https://qiita.com/watamura/items/51c70fbb848e5f956fd6)
 
-## 2.2. devcontainer のインストール
+## 2.2. devcontainer のインストール・使い方
 
 DevContainer は、VSCode の Remote - Containers 拡張機能を通じて、Docker コンテナ内で開発環境を構築し、利用するための機能です。
 
 DevContainer の利用により、開発環境のセットアップ時間が大幅に短縮されます。また、プロジェクトに参加する全員が同じ開発環境を共有するため、環境差異によるトラブルを防ぐことができます。さらに、Docker コンテナを使用するため、開発環境を簡単に再現、共有、移行することが可能となります。これにより、環境構築の複雑さを意識することなく、コーディングに集中することができます。
+
+DevContainer は、VSCode の拡張機能（2x2 のマスで右上だけ浮いているようなアイコン）からインストールできます
+　![alt text](fig/vscode_devcontainerインストール.png)
 
 > 参考記事
 >
@@ -53,6 +56,10 @@ git clone https://github.com/matsuoinstitute/chatbot-demo
 ```
 
 2. VSCode にて、clone してできた chatbot-demo フォルダを選択
-   　![alt text](fig/vscode_フォルダ選択.png)
+   ![alt text](fig/vscode_フォルダ選択.png)
 
-3. → 　コードを書ける環境が開ける
+3. 右下に出てくる、「コンテナを再度開く」ボタンを押す
+   > ボタンが出てこない場合は、コマンドパレット（⌘+p）で「>dev」と打てばコンテナを開くボタンが出現します
+   > fig/vscode\_コマンドパレットでコンテナを再度開く.png
+
+これで、コードを書ける環境が開けたはずです。LLM アプリの開発を始めましょう！
