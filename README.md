@@ -53,6 +53,6 @@ git clone https://github.com/matsuoinstitute/chatbot-demo
 ```
 
 2. VSCode にて、clone してできた chatbot-demo フォルダを選択
-   　![alt text](vscode_フォルダ選択.png)
+   　![alt text](fig/vscode_フォルダ選択.png)
 
 3. → 　コードを書ける環境が開ける
