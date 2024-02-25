@@ -1,14 +1,8 @@
 受講生用のリポジトリなので、このリポジトリは基本 README.md 以外いじらない。
 
-・まず、手順としては.env.sample をコピーして.env を作成する
-
-・key を入力しましょう。
-
 ・https://github.com/Chainlit/chainlit のリポジトリをみてみて、chainlit のを使って対話方のチャットボットを作ってみましょう。
 
-・src 直下に移動して、demo.py を実行してみましょう。
-
-・具体な内容は wiki に記載、ここでは、基本的な手順を記載す。
+- 具体な内容は [wiki](https://github.com/matsuoinstitute/chatbot-demo/wiki) に記載、ここでは、コードを書くために必要な基本的な手順を記載します。
 
 # 1. Docker Desktop のインストール
 
@@ -50,20 +44,31 @@ DevContainer は、VSCode の拡張機能（2x2 のマスで右上だけ浮い�
 
 # 3. 本課題でコードを書くまで
 
-1. 今見ているページをローカルの適当な場所に git clone する
+### 1. 今見ているページをローカルの適当な場所に git clone する
 
 ```sh
 git clone https://github.com/matsuoinstitute/chatbot-demo
 ```
 
-2. VSCode にて、clone してできた chatbot-demo フォルダを選択
+### 2. VSCode にて、clone してできた chatbot-demo フォルダを選択
 
 > ![alt text](fig/vscode_フォルダ選択.png)
 
-3. 右下に出てくる、「コンテナを再度開く」ボタンを押す
+### 3. 右下に出てくる、「コンテナを再度開く」ボタンを押す
 
 > ボタンが出てこない場合は、コマンドパレット（⌘+p）で「>dev」と打てばコンテナを開くボタンが出現します
 
 > ![alt text](fig/vscode_コマンドパレットでコンテナを再度開く.png)
 
+### 4. env ファイルの設定
+
+env.sample をコピー＆ペーストして、作成できたファイルを「.env」という名前に変更
+
+> 以下のような構造になっていれば OK です
+> ![alt text](fig/vscode_env.png)
+
+.env ファイルには、「sk-」から始まる自分の OpenAI API キーを設定します。
+
 これで、コードを書ける環境が開けたはずです。LLM アプリの開発を始めましょう！
+
+まずは src 直下に移動して、demo.py を動かしてみましょう！
