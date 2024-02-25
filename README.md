@@ -65,9 +65,12 @@ git clone https://github.com/matsuoinstitute/chatbot-demo
 env.sample をコピー＆ペーストして、作成できたファイルを「.env」という名前に変更
 
 > 以下のような構造になっていれば OK です
+
 > ![alt text](fig/vscode_env.png)
 
 .env ファイルには、「sk-」から始まる自分の OpenAI API キーを設定します。
+
+---
 
 これで、コードを書ける環境が開けたはずです。LLM アプリの開発を始めましょう！
 
