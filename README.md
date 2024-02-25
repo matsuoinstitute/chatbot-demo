@@ -45,3 +45,14 @@ DevContainer の利用により、開発環境のセットアップ時間が大�
 > - [VS Code+DevContainer+Docker で最強 Python 開発環境](https://zenn.dev/aidemy/articles/vscode-env-python)
 
 # 3. 本課題でコードを書くまで
+
+1. 今見ているページをローカルの適当な場所に git clone する
+
+```sh
+git clone https://github.com/matsuoinstitute/chatbot-demo
+```
+
+2. VSCode にて、clone してできた chatbot-demo フォルダを選択
+   　![alt text](vscode_フォルダ選択.png)
+
+3. → 　コードを書ける環境が開ける
