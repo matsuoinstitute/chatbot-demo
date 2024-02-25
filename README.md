@@ -68,7 +68,7 @@ env.sample をコピー＆ペーストして、作成できたファイルを「
 
 > ![alt text](fig/vscode_env.png)
 
-.env ファイルには、「sk-」から始まる自分の OpenAI API キーを設定します。
+.env ファイルには、「sk-」から始まる自分の OpenAI API キーを設定します。（step1にて使用）
 
 ---
 
