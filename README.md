@@ -61,7 +61,9 @@ git clone https://github.com/matsuoinstitute/chatbot-demo
 > ![alt text](fig/vscode_フォルダ選択.png)
 
 3. 右下に出てくる、「コンテナを再度開く」ボタンを押す
-   > ボタンが出てこない場合は、コマンドパレット（⌘+p）で「>dev」と打てばコンテナを開くボタンが出現します
-   > ![alt text](fig/vscode_コマンドパレットでコンテナを再度開く.png)
+
+> ボタンが出てこない場合は、コマンドパレット（⌘+p）で「>dev」と打てばコンテナを開くボタンが出現します
+
+> ![alt text](fig/vscode_コマンドパレットでコンテナを再度開く.png)
 
 これで、コードを書ける環境が開けたはずです。LLM アプリの開発を始めましょう！
