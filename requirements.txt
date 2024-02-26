@@ -7,3 +7,8 @@ pyautogen==0.2.10
 pymupdf
 spacy
 chromadb==0.4.22
+python-docx
+openpyxl
+pandas
+unstructured==0.6.7
+docx2txt
