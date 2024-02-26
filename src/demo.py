@@ -1,26 +1,40 @@
 import chainlit as cl
+from dotenv import load_dotenv
+from langchain.prompts import ChatPromptTemplate
+from langchain.schema import StrOutputParser
+from langchain.schema.runnable import Runnable
+from langchain.schema.runnable.config import RunnableConfig
+from langchain_community.chat_models import ChatOpenAI
+
+load_dotenv("../.env")
 
 
-@cl.step
-def tool():
-    return "Response from the tool!"
+@cl.on_chat_start
+async def on_chat_start():
+    model = ChatOpenAI(streaming=True)
+    prompt = ChatPromptTemplate.from_messages(
+        [
+            (
+                "system",
+                "あなたは優秀はQAシステムです。ユーザーからの質問に対して、Step by Stepで思考して適切な回答を返してください。",
+            ),
+            ("human", "{question}"),
+        ]
+    )
+    runnable = prompt | model | StrOutputParser()
+    cl.user_session.set("runnable", runnable)
 
 
-@cl.on_message  # this function will be called every time a user inputs a message in the UI
-async def main(message: cl.Message):
-    """
-    This function is called every time a user inputs a message in the UI.
-    It sends back an intermediate response from the tool, followed by the final answer.
+@cl.on_message
+async def on_message(message: cl.Message):
+    runnable = cl.user_session.get("runnable")  # type: Runnable
 
-    Args:
-        message: The user's message.
+    msg = cl.Message(content="")
 
-    Returns:
-        None.
-    """
+    async for chunk in runnable.astream(
+        {"question": message.content},
+        config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
+    ):
+        await msg.stream_token(chunk)
 
-    # Call the tool
-    tool()
-
-    # Send the final answer.
-    await cl.Message(content="This is the final answer").send()
+    await msg.send()
