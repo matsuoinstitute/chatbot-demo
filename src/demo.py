@@ -62,7 +62,6 @@ async def on_message(input_message: cl.Message):
             HumanMessage(
                 content=prompt.format(
                     document=documents,
-                    # query=input_message.content,
                     question=input_message.content,
                 )
             )
