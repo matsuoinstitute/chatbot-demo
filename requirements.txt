@@ -1,1 +1,9 @@
-chainlit==1.0.200
+chainlit==1.0.101
+langchain==0.1.5
+langchain-openai
+python-dotenv==1.0.1
+openai==1.10.0
+pyautogen==0.2.10
+pymupdf
+spacy
+chromadb==0.4.22
