@@ -1,40 +1,73 @@
 import chainlit as cl
 from dotenv import load_dotenv
-from langchain.prompts import ChatPromptTemplate
-from langchain.schema import StrOutputParser
-from langchain.schema.runnable import Runnable
-from langchain.schema.runnable.config import RunnableConfig
-from langchain_community.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI
+from langchain.document_loaders import PyMuPDFLoader
+from langchain.prompts import PromptTemplate
+from langchain.schema import HumanMessage
 
 load_dotenv("../.env")
+
+prompt = PromptTemplate(
+    template="""
+文章を前提にして質問に答えてください。
+文章 :
+{document}
+質問 :
+{question}
+""",
+    input_variables=["document", "question"],
+)
 
 
 @cl.on_chat_start
 async def on_chat_start():
-    model = ChatOpenAI(streaming=True)
-    prompt = ChatPromptTemplate.from_messages(
-        [
-            (
-                "system",
-                "あなたは優秀はQAシステムです。ユーザーからの質問に対して、Step by Stepで思考して適切な回答を返してください。",
-            ),
-            ("human", "{question}"),
-        ]
-    )
-    runnable = prompt | model | StrOutputParser()
-    cl.user_session.set("runnable", runnable)
+    """初回起動時に呼び出される."""
+    files = None
+
+    # awaitメソッドのために、whileを利用する。アップロードされるまで続く。
+    while files is None:
+        files = await cl.AskFileMessage(
+            max_size_mb=20,
+            content="PDFを選択してください。",
+            accept=["application/pdf"],
+            raise_on_timeout=False,
+        ).send()
+
+    file = files[0]
+    # アップロードされたファイルのパスから中身を読み込む。
+    documents = PyMuPDFLoader(file.path).load()
+
+    # ページごとに分割されている文章を統合し、トークン数制限の関係から指定した文字数までに切り捨てる。
+    documents_content = ""
+    for document in documents:
+        documents_content += document.page_content
+    cl.user_session.set("documents", documents_content[:5000])
+
+    await cl.Message(content="アップロードが完了しました！").send()
 
 
 @cl.on_message
-async def on_message(message: cl.Message):
-    runnable = cl.user_session.get("runnable")  # type: Runnable
+async def on_message(input_message: cl.Message):
+    """メッセージが送られるたびに呼び出される."""
 
-    msg = cl.Message(content="")
+    # チャット用のOpenAIのモデル
+    open_ai = ChatOpenAI(model="gpt-4-0125-preview")
 
-    async for chunk in runnable.astream(
-        {"question": message.content},
-        config=RunnableConfig(callbacks=[cl.LangchainCallbackHandler()]),
-    ):
-        await msg.stream_token(chunk)
+    # ユーザーのセッションに保存されたドキュメントを取得
+    documents = cl.user_session.get("documents")
 
-    await msg.send()
+    # プロンプトに埋め込みながらOpenAIに送信
+    result = open_ai(
+        [
+            HumanMessage(
+                content=prompt.format(
+                    document=documents,
+                    # query=input_message.content,
+                    question=input_message.content,
+                )
+            )
+        ]
+    ).content
+
+    # 下記で結果を表示する(content=をOpenAIの結果にする。)
+    await cl.Message(content=result).send()
