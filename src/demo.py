@@ -2,9 +2,12 @@ import os
 
 import chainlit as cl
 from dotenv import load_dotenv
+from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
-from langchain.prompts import PromptTemplate
-from langchain.schema import HumanMessage
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.memory import ChatMessageHistory, ConversationBufferMemory
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.vectorstores import Chroma
 
 from document_loader import excel_loader, pdf_loader, word_loader
 
@@ -23,20 +26,6 @@ ALLOWED_EXTENSIONS = [
     ".docx",
     ".xlsx",
 ]
-
-prompt = PromptTemplate(
-    template="""
-あなたは優秀なQAシステムです。アップロードされたファイルの文章が与えられます。以下の注意点を考慮して、ユーザーからの質問に回答してください。
-# 注意点:
-- ユーザーが「PDF」「エクセル」などと言うときは、以下の「文章」を指しています。
-- 「文章」に記載の情報を元に回答するようにし、記載のない情報については回答できない旨を伝えてください。
-# 文章:
-{document}
-# 質問:
-{question}
-""",
-    input_variables=["document", "question"],
-)
 
 
 @cl.on_chat_start
@@ -65,38 +54,71 @@ async def on_chat_start():
         else:
             documents = excel_loader(file.path)
 
-        # ページごとに分割されている文章を統合し、トークン数制限の関係から指定した文字数までに切り捨てる。
-        documents_content = ""
-        for document in documents:
-            documents_content += document.page_content
-        cl.user_session.set("documents", documents_content[:5000])
+        text_splitter = CharacterTextSplitter(chunk_size=500)
+        splitted_documents = text_splitter.split_documents(documents)
 
+        # テキストをベクトル化するOpenAIのモデル
+        embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")
+
+        # Chromaにembedding APIを指定して、初期化する。
+        database = Chroma(embedding_function=embeddings)
+
+        # PDFから内容を分割されたドキュメントを保存する。
+        database.add_documents(splitted_documents)
+
+        cl.user_session.set("data", database)
         await cl.Message(content="アップロードが完了しました！").send()
-    else:
-        await cl.Message(content="アップロードされたファイルは対応していません。").send()
+
+    llm = ChatOpenAI(model="gpt-4-0125-preview", temperature=0)
+    message_history = ChatMessageHistory()
+    memory = ConversationBufferMemory(
+        memory_key="chat_history",
+        output_key="answer",
+        chat_memory=message_history,
+        return_messages=True,
+    )
+
+    # チャットモデルを初期化する。
+    if database is not None:
+        retriever = database.as_retriever()
+        qa = ConversationalRetrievalChain.from_llm(
+            llm=llm,
+            chain_type="stuff",
+            retriever=retriever,
+            verbose=True,
+            memory=memory,
+            return_source_documents=True,
+        )
+        cl.user_session.set("qa", qa)
 
 
 @cl.on_message
 async def on_message(input_message: cl.Message):
     """メッセージが送られるたびに呼び出される."""
+    qa = cl.user_session.get("qa")
 
-    # チャット用のOpenAIのモデル
-    open_ai = ChatOpenAI(model="gpt-4-0125-preview")
+    # ユーザーの入力をQAモデルに渡して、回答を取得する。
+    res = await qa.acall(
+        input_message.content,
+        callbacks=[cl.AsyncLangchainCallbackHandler()]
+    )
+    answer = res["answer"]
+    source_documents = res["source_documents"]
+    text_elements = []
 
-    # ユーザーのセッションに保存されたドキュメントを取得
-    documents = cl.user_session.get("documents")
-
-    # プロンプトに埋め込みながらOpenAIに送信
-    result = open_ai(
-        [
-            HumanMessage(
-                content=prompt.format(
-                    document=documents,
-                    question=input_message.content,
-                )
+    # 参照元のドキュメントを表示する。
+    if source_documents:
+        for source_idx, source_doc in enumerate(source_documents):
+            source_name = f"source_{source_idx}"
+            # Create the text element referenced in the message
+            text_elements.append(
+                cl.Text(content=source_doc.page_content, name=source_name)
             )
-        ]
-    ).content
+        source_names = [text_el.name for text_el in text_elements]
 
-    # 下記で結果を表示する(content=をOpenAIの結果にする。)
-    await cl.Message(content=result).send()
+        if source_names:
+            answer += f"\n参照元: {', '.join(source_names)}"
+        else:
+            answer += "\n参照先が見つかりませんでした。"
+
+    await cl.Message(content=answer, elements=text_elements).send()
