@@ -1,11 +1,9 @@
 import chainlit as cl
-from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
 from langchain.document_loaders import PyMuPDFLoader
 from langchain.prompts import PromptTemplate
 from langchain.schema import HumanMessage
 
-load_dotenv("../.env")
 
 prompt = PromptTemplate(
     template="""
