@@ -1,3 +1,5 @@
+![alt text](fig/logo_松尾研究所.jpeg)
+
 受講生用のリポジトリなので、このリポジトリは基本 README.md 以外いじらない。
 
 - https://github.com/Chainlit/chainlit のリポジトリをみてみて、chainlit のを使って対話方のチャットボットを作ってみましょう。
@@ -68,7 +70,7 @@ env.sample をコピー＆ペーストして、作成できたファイルを「
 
 > ![alt text](fig/vscode_env.png)
 
-.env ファイルには、「sk-」から始まる自分の OpenAI API キーを設定します。（step1にて使用）
+.env ファイルには、「sk-」から始まる自分の OpenAI API キーを設定します。（step1 にて使用）
 
 ---
 
