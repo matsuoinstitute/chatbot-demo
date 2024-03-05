@@ -1,7 +1,6 @@
 import os
 
 import chainlit as cl
-from dotenv import load_dotenv
 from langchain.chains import ConversationalRetrievalChain
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings import OpenAIEmbeddings
@@ -10,8 +9,6 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import Chroma
 
 from document_loader import excel_loader, pdf_loader, word_loader
-
-load_dotenv("../.env")
 
 ALLOWED_MIME_TYPES = [
     "application/pdf",
