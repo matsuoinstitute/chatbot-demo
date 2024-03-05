@@ -1,14 +1,11 @@
 import os
 
 import chainlit as cl
-from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.schema import HumanMessage
 
 from document_loader import excel_loader, pdf_loader, word_loader
-
-load_dotenv("../.env")
 
 ALLOWED_MIME_TYPES = [
     "application/pdf",
