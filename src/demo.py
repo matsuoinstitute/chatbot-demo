@@ -1,12 +1,9 @@
 import chainlit as cl
-from dotenv import load_dotenv
 from langchain.prompts import ChatPromptTemplate
 from langchain.schema import StrOutputParser
 from langchain.schema.runnable import Runnable
 from langchain.schema.runnable.config import RunnableConfig
 from langchain_community.chat_models import ChatOpenAI
-
-load_dotenv("../.env")
 
 
 @cl.on_chat_start
