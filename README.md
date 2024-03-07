@@ -1,10 +1,26 @@
-![alt text](fig/logo_松尾研究所.jpeg)
+<img src="fig/logo_松尾研究所.jpeg" alt="alt text" width="600"/>
 
-受講生用のリポジトリなので、このリポジトリは基本 README.md 以外いじらない。
+# 0. 本課題について
 
-- https://github.com/Chainlit/chainlit のリポジトリをみてみて、chainlit のを使って対話方のチャットボットを作ってみましょう。
+本課題では、Chainlit というパッケージを活用して、LLM のアプリ開発を行なっていただきます。
 
-- 具体な内容は [wiki](https://github.com/matsuoinstitute/chatbot-demo/wiki) に記載、ここでは、コードを書くために必要な基本的な手順を記載します。
+> chainlit とは？
+>
+> - Python のオープンソースのライブラリ
+> - ChatGPT のような UI のアプリを、短いコードで作成し、デプロイできる
+> - 「chainlit」で検索すれば多くの日本語記事が出てくる
+> - 公式レポジトリ：https://github.com/Chainlit/chainlit
+
+本講義で使うツールは、以下の通りです。
+
+- Docker（見出し 1 で説明）
+  - 仮想化プラットフォーム。自分のローカルの PC 環境を汚さずに環境を構築できる
+- VSCode（見出し 2 で説明）
+  - 多くの開発者が使う、コードを書く環境（IDE；総合開発環境）
+- Devcontainer（見出し 2 で説明）
+  - VSCode 上で Docker を簡単に使うためのツール
+
+以下の手順に従って、開発環境を用意しましょう！
 
 # 1. Docker Desktop のインストール
 
@@ -74,6 +90,6 @@ env.sample をコピー＆ペーストして、作成できたファイルを「
 
 ---
 
-これで、コードを書ける環境ができたはずです。LLM アプリの開発を始めましょう！
+これで、コードを書ける環境ができたはずです。
 
-まずは src 直下に移動して、demo.py を動かしてみましょう！
+Github のイシューの切り方や、PR（プルリクエスト）の作り方など、具体的な開発手順は [wiki](https://github.com/matsuoinstitute/chatbot-demo/wiki) に記載しているので、そちらも併せてご覧ください
