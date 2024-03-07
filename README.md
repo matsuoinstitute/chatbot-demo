@@ -4,12 +4,15 @@
 
 本課題では、Chainlit というパッケージを活用して、LLM のアプリ開発を行なっていただきます。
 
-> chainlit とは？
+> Chainlit とは？
 >
 > - Python のオープンソースのライブラリ
 > - ChatGPT のような UI のアプリを、短いコードで作成し、デプロイできる
 > - 「chainlit」で検索すれば多くの日本語記事が出てくる
 > - 公式レポジトリ：https://github.com/Chainlit/chainlit
+
+> 最終制作物のイメージ
+> ![alt text](movie/readme_最終制作物.gif)
 
 本講義で使うツールは、以下の通りです。
 
