@@ -3,7 +3,7 @@
 # 0. 本課題について
 
 本課題では、LLM のアプリ開発を行なっていただきます。
-実装においては、Chainlitというライブラリを使用します。
+実装においては、Chainlit というライブラリを使用します。
 
 > Chainlit とは？
 >
@@ -19,8 +19,21 @@
 
 このフローに沿って開発することで、ツールの使い方や開発の流れの理解し、1 人のエンジニアとして活躍できるスキルの基礎を身につけて行きます。
 
-> 最終制作物のイメージ
-> ![alt text](movie/readme_part4制作物.gif)
+<details>
+<summary>最終制作物のイメージ（動画）</summary>
+
+![alt text](movie/readme_part4制作物.gif)
+
+</details>
+
+<details>
+<summary>最終制作物のイメージ（画像）</summary>
+
+![alt text](movie/readme_part4制作物_画像.png)
+
+</details>
+
+---
 
 本講義で使うツールは、以下の通りです。
 
