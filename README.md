@@ -1,4 +1,4 @@
-<img src="fig/logo_松尾研究所.jpeg" alt="alt text" width="600"/>
+<img src="resource/fig/logo_松尾研究所.jpeg" alt="alt text" width="600"/>
 
 # 0. 本課題について
 
@@ -15,21 +15,21 @@
 みなさんには、アプリで追加したい機能に関するイシューを 4 つ立ててもらい、そのイシューを 1 つずつ解決していくことで、 LLM アプリの機能追加を行なっていただきます。
 
 > 作成するイシューの例
-> ![alt text](fig/github_イシューの例.png)
+> ![alt text](resource/fig/github_イシューの例.png)
 
 このフローに沿って開発することで、ツールの使い方や開発の流れの理解し、1 人のエンジニアとして活躍できるスキルの基礎を身につけて行きます。
 
 <details>
 <summary>最終制作物のイメージ（動画）</summary>
 
-![alt text](movie/readme_part4制作物.gif)
+![alt text](resource/movie/readme_part4制作物.gif)
 
 </details>
 
 <details>
 <summary>最終制作物のイメージ（画像）</summary>
 
-![alt text](movie/readme_part4制作物_画像.png)
+![alt text](resource/movie/readme_part4制作物_画像.png)
 
 </details>
 
@@ -77,7 +77,7 @@ DevContainer の利用により、開発環境のセットアップ時間が大�
 
 DevContainer は、VSCode の拡張機能（2x2 のマスで右上だけ浮いているようなアイコン）からインストールできます
 
-> ![alt text](fig/vscode_devcontainerインストール.png)
+> ![alt text](resource/fig/vscode_devcontainerインストール.png)
 
 > 参考記事
 >
@@ -94,13 +94,13 @@ git clone https://github.com/matsuoinstitute/chatbot-demo
 
 ### 2. VSCode にて、clone してできた chatbot-demo フォルダを選択
 
-> ![alt text](fig/vscode_フォルダ選択.png)
+> ![alt text](resource/fig/vscode_フォルダ選択.png)
 
 ### 3. 右下に出てくる、「コンテナを再度開く」ボタンを押す
 
 > ボタンが出てこない場合は、コマンドパレット（⌘+p）で「>dev」と打てばコンテナを開くボタンが出現します
 
-> ![alt text](fig/vscode_コマンドパレットでコンテナを再度開く.png)
+> ![alt text](resource/fig/vscode_コマンドパレットでコンテナを再度開く.png)
 
 ### 4. env ファイルの設定
 
@@ -108,7 +108,7 @@ env.sample をコピー＆ペーストして、作成できたファイルを「
 
 > 以下のような構造になっていれば OK です
 
-> ![alt text](fig/vscode_env.png)
+> ![alt text](resource/fig/vscode_env.png)
 
 .env ファイルには、「sk-」から始まる自分の OpenAI API キーを設定します。（step1 にて使用）
 
