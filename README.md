@@ -96,13 +96,7 @@ git clone https://github.com/matsuoinstitute/chatbot-demo
 
 > ![alt text](resource/fig/vscode_フォルダ選択.png)
 
-### 3. 右下に出てくる、「コンテナを再度開く」ボタンを押す
-
-> ボタンが出てこない場合は、コマンドパレット（⌘+p）で「>dev」と打てばコンテナを開くボタンが出現します
-
-> ![alt text](resource/fig/vscode_コマンドパレットでコンテナを再度開く.png)
-
-### 4. env ファイルの設定
+### 3. env ファイルの設定
 
 env.sample をコピー＆ペーストして、作成できたファイルを「.env」という名前に変更
 
@@ -111,6 +105,12 @@ env.sample をコピー＆ペーストして、作成できたファイルを「
 > ![alt text](resource/fig/vscode_env.png)
 
 .env ファイルには、「sk-」から始まる自分の OpenAI API キーを設定します。（step1 にて使用）
+
+### 4. 右下に出てくる、「コンテナを再度開く」ボタンを押す
+
+> ボタンが出てこない場合は、コマンドパレット（⌘+shift+p）を開けば、コンテナを開くボタンが出現します
+
+> ![alt text](resource/fig/vscode_コマンドパレットでコンテナを再度開く.png)
 
 ---
 
