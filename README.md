@@ -137,6 +137,6 @@ chainlit run demo.py -w
 
 VSCodeを開き、左下の設定アイコンをクリックすると以下の画像のようになる(以下の画像は最新のバージョン)
 
-![alt text](resource/movie/fig/vscode_vscodeの更新.png)
+![alt text](resource/fig/vscode_vscodeの更新.png)
 
 VSCodeのバージョンが最新でない時は、再起動して更新というボタンが出てくるのでクリックして更新する
