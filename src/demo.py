@@ -116,6 +116,7 @@ async def on_message(input_message: cl.Message):
             )
         source_names = [text_el.name for text_el in text_elements]
 
+    print(source_names)
         if source_names:
             answer += f"\n参照元: {', '.join(source_names)}"
         else:
