@@ -30,11 +30,12 @@
     },
     "runArgs": [
         "--env-file",
-        ".env" // .envファイルへのパスを指定します
+        ".env", // .envファイルへのパスを指定します
+        "--network=chatbot-network"
     ],
     "forwardPorts": [
-        8000
+        8080
     ],
-    "postCreateCommand": "pip install --upgrade pip && pip install --user -r requirements.txt",
+    "postCreateCommand": "pip install --upgrade pip && pip install -r requirements.txt && python -m spacy download ja_core_news_sm",
     "remoteUser": "vscode"
 }
