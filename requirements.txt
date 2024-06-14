@@ -7,3 +7,10 @@ langchain-text-splitters==0.0.1
 langsmith==0.1.38
 openai==1.13.3
 python-dotenv==1.0.1
+PyMuPDF==1.23.12
+tiktoken==0.5.2
+spacy==3.7.4
+docx2txt==0.8
+unstructured[docx,xlsx]
+annoy
+pydantic==1.10.8
